@@ -24,9 +24,30 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-  res.status(201).json({
-    message: 'Product was created'
+  product = {
+    name: req.body.name,
+    price: req.body.price
+  };
+  product = new Product({
+    _id: new mongoose.Types.ObjectId(),
+    name: req.body.name,
+    price: req.body. price
   });
+  product
+    .save()
+    .then(result => {
+      console.log(result);
+      res.status(201).json({
+        message: 'Product was created',
+        createdProduct: product
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
+    });
 });
 
 router.get('/:productId', (req, res, next) => {

@@ -7,6 +7,14 @@ const mongoose = require('mongoose');
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
 
+mongoose.connect(
+  'mongodb+srv://denis:' + 
+  process.env.MONGO_ATLAS_PW + 
+  '@cluster0-cxz4x.mongodb.net/test?retryWrites=true&w=majority',
+  {
+    useUnifiedTopology: true,     
+    useNewUrlParser: true
+  });
 app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
 

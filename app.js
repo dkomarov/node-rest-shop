@@ -15,6 +15,10 @@ mongoose.connect(
     useUnifiedTopology: true,     
     useNewUrlParser: true
   });
+
+app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
 

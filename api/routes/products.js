@@ -52,18 +52,24 @@ router.post('/', (req, res, next) => {
 
 router.get('/:productId', (req, res, next) => {
   const id = req.params.productId;
-  if (id === 'special') {
-    res.status(200).json({
-      message: 'You discovered the special ID',
-      id: id
+  Product.findById(id)
+    .exec()
+    .then(doc => {
+      console.log("From database", doc);
+      if (doc) {
+        res.status(200).json(doc)
+      } else {
+        res.status(404).json({ message: 'No valid entry found' });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
     });
-  } else {
-    res.status(200).json({
-      message: 'You passed an id',
-      id: id
-    });
-  }
-});
+  });
+
 
 router.patch('/:productId', (req, res, next) => {
   const id = req.params.productId;

@@ -43,6 +43,7 @@ router.get('/', (req, res, next) => {
           return {
             name: doc.name,
             price: doc.price,
+            productImage: doc.productImage,
             _id: doc._id,
             request: {
               type: 'GET',
@@ -66,15 +67,20 @@ router.get('/', (req, res, next) => {
   })
 });
 
-router.post('/', (req, res, next) => {
+router.post('/', upload.single('productImage'), (req, res, next) => {
+  console.log(req.file);
+
   product = {
     name: req.body.name,
-    price: req.body.price
+    price: req.body.price,
+    productImage: req.file.path
   };
+
   product = new Product({
     _id: new mongoose.Types.ObjectId(),
     name: req.body.name,
-    price: req.body. price
+    price: req.body. price,   
+    productImage: req.file.path
   });
   product
     .save()
